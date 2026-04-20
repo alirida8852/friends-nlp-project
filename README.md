@@ -165,6 +165,8 @@ Projects using similar datasets often focus on dialogue modeling and personality
 ## 👩‍💻 Author
 
 Rida
+Tejeswini
+Inchara
 NLP Mini Project
 
-[1]: https://chrispaynehome.github.io/html/friends.html?utm_source=chatgpt.com "Friends scene text generation"
+
