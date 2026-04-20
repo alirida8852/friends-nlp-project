@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The One With The Translator</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Permanent+Marker&display=swap');
+
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+
+    /* 🔥 DOTTED PURPLE BACKGROUND */
+    background-color: #5c5470;
+    background-image: radial-gradient(#ffffff22 1px, transparent 1px);
+    background-size: 25px 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CARD */
+.card {
+    background: #7a6f9b;
+    padding: 50px 40px;
+    border-radius: 30px;
+    width: 420px;
+    text-align: center;
+    border: 4px solid #ffd700;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* TITLE */
+h1 {
+    font-family: 'Permanent Marker';
+    font-size: 3rem;
+    color: white;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
+/* SUBTITLE */
+.subtitle {
+    color: #ffd700;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+/* BUTTON */
+button {
+    background: #ffd700;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* OUTPUT */
+.output {
+    margin-top: 25px;
+    background: #3c3554;
+    padding: 15px;
+    border-radius: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+/* 🔥 TOP CHARACTER POPUP */
+#popup {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #3c3554;
+    padding: 15px 25px;
+    border-radius: 20px;
+    display: none;
+    text-align: center;
+    border: 2px solid #ffd700;
+}
+
+#popup img {
+    width: 100px;
+    border-radius: 10px;
+}
+
+#popup p {
+    color: white;
+    margin-top: 5px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>FRIENDS</h1>
+    <p class="subtitle">THE ONE WITH THE TRANSLATOR</p>
+
+    <input id="text" placeholder="Type something...">
+    <button onclick="translateText()">Translate</button>
+
+    <div class="output" id="result"></div>
+</div>
+
+<!-- POPUP -->
+<div id="popup">
+    <img id="charImg">
+    <p id="charName"></p>
+</div>
+
+<script>
+async function translateText() {
+    const text = document.getElementById("text").value;
+
+    if (!text) return;
+
+    const res = await fetch("http://127.0.0.1:8000/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({text})
+    });
+
+    const data = await res.json();
+
+    document.getElementById("result").innerText = data.response;
+
+    showCharacter(data.predicted_character);
+}
+
+function showCharacter(char) {
+    const popup = document.getElementById("popup");
+    const img = document.getElementById("charImg");
+    const name = document.getElementById("charName");
+
+    const map = {
+        "ROSS": "assets/ross.png",
+        "RACHEL": "assets/rachel.png",
+        "MONICA": "assets/monica.png",
+        "CHANDLER": "assets/chandler.png",
+        "JOEY": "assets/joey.png",
+        "PHOEBE": "assets/phoebe.png"
+    };
+
+    img.src = map[char];
+    name.innerText = char;
+
+    popup.style.display = "block";
+
+    setTimeout(() => {
+        popup.style.display = "none";
+    }, 4000);
+}
+</script>
+
+</body>
+</html>
