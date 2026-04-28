@@ -1,178 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The One With The Translator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The One With The Translator</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Permanent+Marker&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Permanent+Marker&display=swap');
 
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: 'Poppins', sans-serif;
+        :root {
+            --primary-purple: #5c5470;
+            --accent-gold: #ffd700;
+            --card-bg: rgba(122, 111, 155, 0.9);
+            --dark-purple: #3c3554;
+        }
 
-    /* 🔥 DOTTED PURPLE BACKGROUND */
-    background-color: #5c5470;
-    background-image: radial-gradient(#ffffff22 1px, transparent 1px);
-    background-size: 25px 25px;
+        body {
+            margin: 0;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-purple);
+            background-image: radial-gradient(rgba(255, 255, 255, 0.1) 2px, transparent 2px);
+            background-size: 30px 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+        /* GLASS CARD EFFECT */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 50px 40px;
+            border-radius: 40px;
+            width: 450px;
+            text-align: center;
+            border: 4px solid var(--accent-gold);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
 
-/* CARD */
-.card {
-    background: #7a6f9b;
-    padding: 50px 40px;
-    border-radius: 30px;
-    width: 420px;
-    text-align: center;
-    border: 4px solid #ffd700;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-}
+        h1 {
+            font-family: 'Permanent Marker';
+            font-size: 3.5rem;
+            color: white;
+            letter-spacing: 8px;
+            margin: 0;
+            text-shadow: 3px 3px 0px var(--dark-purple);
+        }
 
-/* TITLE */
-h1 {
-    font-family: 'Permanent Marker';
-    font-size: 3rem;
-    color: white;
-    letter-spacing: 5px;
-    margin-bottom: 10px;
-}
+        .subtitle {
+            color: var(--accent-gold);
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
 
-/* SUBTITLE */
-.subtitle {
-    color: #ffd700;
-    font-weight: 600;
-    margin-bottom: 30px;
-}
+        /* INPUT STYLING */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
 
-/* INPUT */
-input {
-    width: 100%;
-    padding: 15px;
-    border-radius: 50px;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    margin-bottom: 20px;
-}
+        input {
+            width: 85%;
+            padding: 18px 25px;
+            border-radius: 50px;
+            border: 3px solid transparent;
+            outline: none;
+            font-size: 1rem;
+            background: white;
+            transition: 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
 
-/* BUTTON */
-button {
-    background: #ffd700;
-    border: none;
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
+        input:focus {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
 
-button:hover {
-    transform: scale(1.05);
-}
+        /* BOUNCY BUTTON */
+        button {
+            background: var(--accent-gold);
+            color: var(--dark-purple);
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 5px 0px #b89b00;
+        }
 
-/* OUTPUT */
-.output {
-    margin-top: 25px;
-    background: #3c3554;
-    padding: 15px;
-    border-radius: 15px;
-    color: white;
-    font-weight: bold;
-}
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0px #b89b00;
+        }
 
-/* 🔥 TOP CHARACTER POPUP */
-#popup {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #3c3554;
-    padding: 15px 25px;
-    border-radius: 20px;
-    display: none;
-    text-align: center;
-    border: 2px solid #ffd700;
-}
+        button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0px #b89b00;
+        }
 
-#popup img {
-    width: 100px;
-    border-radius: 10px;
-}
+        .output {
+            margin-top: 30px;
+            background: var(--dark-purple);
+            padding: 20px;
+            border-radius: 20px;
+            color: white;
+            font-style: italic;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 5px solid var(--accent-gold);
+        }
 
-#popup p {
-    color: white;
-    margin-top: 5px;
-    font-weight: bold;
-}
-</style>
+        /* 🔥 DYNAMIC CHARACTER POPUP */
+        #popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            z-index: 10;
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+        }
+
+        #popup.active {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        /* SUNBURST EFFECT BEHIND CHARACTER */
+        .sunburst {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--accent-gold) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            opacity: 0.6;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        #charImg {
+            width: 180px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 8px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        #charName {
+            background: var(--accent-gold);
+            color: var(--dark-purple);
+            padding: 5px 20px;
+            border-radius: 10px;
+            font-weight: 900;
+            font-size: 1.5rem;
+            margin-top: -20px;
+            position: relative;
+            display: inline-block;
+            font-family: 'Permanent Marker';
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="card">
-    <h1>FRIENDS</h1>
-    <p class="subtitle">THE ONE WITH THE TRANSLATOR</p>
+<div class="card" id="mainCard">
+    <h1>F·R·I·E·N·D·S</h1>
+    <p class="subtitle">The One With The AI Translator</p>
 
-    <input id="text" placeholder="Type something...">
+    <div class="input-group">
+        <input id="text" placeholder="Type a sentence..." autocomplete="off">
+    </div>
+    
     <button onclick="translateText()">Translate</button>
 
-    <div class="output" id="result"></div>
+    <div class="output" id="result">The results will appear here...</div>
 </div>
 
-<!-- POPUP -->
 <div id="popup">
-    <img id="charImg">
+    <div class="sunburst"></div>
+    <img id="charImg" src="" alt="character">
+    <br>
     <p id="charName"></p>
 </div>
 
 <script>
-async function translateText() {
-    const text = document.getElementById("text").value;
+    async function translateText() {
+        const textInput = document.getElementById("text");
+        const resultDiv = document.getElementById("result");
+        const text = textInput.value;
 
-    if (!text) return;
+        if (!text) return;
 
-    const res = await fetch("http://127.0.0.1:8000/predict", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({text})
-    });
+        resultDiv.innerText = "Thinking...";
 
-    const data = await res.json();
+        try {
+            const res = await fetch("http://127.0.0.1:8000/predict", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({text})
+            });
 
-    document.getElementById("result").innerText = data.response;
+            const data = await res.json();
+            resultDiv.innerText = `"${data.response}"`;
+            showCharacter(data.predicted_character);
+            
+        } catch (error) {
+            resultDiv.innerText = "Error: Backend not reachable!";
+            console.error(error);
+        }
+    }
 
-    showCharacter(data.predicted_character);
-}
+    function showCharacter(char) {
+        const popup = document.getElementById("popup");
+        const card = document.getElementById("mainCard");
+        const img = document.getElementById("charImg");
+        const name = document.getElementById("charName");
 
-function showCharacter(char) {
-    const popup = document.getElementById("popup");
-    const img = document.getElementById("charImg");
-    const name = document.getElementById("charName");
+        const map = {
+            "ROSS": "assets/ross.png",
+            "RACHEL": "assets/rachel.png",
+            "MONICA": "assets/monica.png",
+            "CHANDLER": "assets/chandler.png",
+            "JOEY": "assets/joey.png",
+            "PHOEBE": "assets/phoebe.png"
+        };
 
-    const map = {
-        "ROSS": "assets/ross.png",
-        "RACHEL": "assets/rachel.png",
-        "MONICA": "assets/monica.png",
-        "CHANDLER": "assets/chandler.png",
-        "JOEY": "assets/joey.png",
-        "PHOEBE": "assets/phoebe.png"
-    };
+        img.src = map[char.toUpperCase()] || "assets/default.png";
+        name.innerText = char;
 
-    img.src = map[char];
-    name.innerText = char;
+        // Visual Sequence
+        card.style.opacity = "0.3";
+        card.style.transform = "scale(0.9)";
+        popup.classList.add("active");
 
-    popup.style.display = "block";
-
-    setTimeout(() => {
-        popup.style.display = "none";
-    }, 4000);
-}
+        setTimeout(() => {
+            popup.classList.remove("active");
+            card.style.opacity = "1";
+            card.style.transform = "scale(1)";
+        }, 3000);
+    }
 </script>
 
 </body>
