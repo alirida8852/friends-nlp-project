@@ -1,64 +1,104 @@
-# Friends Catchphrase Detector (NLP Project)
+# Friends Catchphrase Detection (NLP Project)
 
-## 📌 Overview
-This project is a Natural Language Processing (NLP) application that detects and classifies character-specific catchphrases from the TV show *Friends*. It uses machine learning techniques to identify patterns in dialogue and predict which character a given line is most associated with.
+## Overview
+This project is a Natural Language Processing (NLP) system that predicts which character from the TV show *Friends* is speaking based on a given dialogue input.
 
-## 🚀 Features
-- Text preprocessing (tokenization, cleaning, normalization)
-- TF-IDF vectorization for feature extraction
-- Machine learning-based classification
-- FastAPI backend for real-time predictions
-- REST API endpoints for easy integration
+It uses machine learning techniques to classify text into multiple character classes such as Joey, Ross, Rachel, Chandler, Monica, and Phoebe.
 
-## 🛠 Tech Stack
+---
+
+## Problem Statement
+Given a line of dialogue, the goal is to identify the most likely character who said it.
+
+This is a **multi-class text classification problem**, where each class represents a character.
+
+---
+
+## Tech Stack
 - Python
 - scikit-learn
-- Pandas, NumPy
-- FastAPI
-- NLP (TF-IDF Vectorization)
-
-## 🔄 ML Pipeline
-
-- Data Collection (Friends dialogue dataset)
-- Text Preprocessing (cleaning, tokenization)
-- Feature Extraction (TF-IDF vectorization)
-- Model Training (classification model)
-- Prediction via FastAPI API
-
-## 🤖 Model Used
+- Pandas
+- NumPy
 - TF-IDF Vectorizer
-- Classification Model: (e.g., Logistic Regression / Naive Bayes)
 
-## ⚙️ How It Works
-1. Input dialogue text from the *Friends* dataset  
-2. Preprocess the text (remove noise, tokenize, normalize)  
-3. Convert text into numerical vectors using TF-IDF  
-4. Feed vectors into a trained ML model  
-5. Model predicts the character/catchphrase association  
+---
 
-## 🧪 Example Prediction
+## Approach
 
-Input:
-"We were on a break!"
+### 1. Data Preprocessing
+- Removed punctuation and special characters  
+- Converted text to lowercase  
+- Tokenized dialogue lines  
 
-Output:
-Predicted Character: Ross
+### 2. Feature Engineering
+- Used **TF-IDF (Term Frequency–Inverse Document Frequency)** to convert text into numerical features  
 
-## 📸 API Preview
+### 3. Model Training
+- Applied machine learning algorithms such as:
+  - Multinomial Naive Bayes *(recommended for text classification)*  
+  - Logistic Regression *(optional improvement)*  
 
-### Swagger Interface
-![Swagger UI](images/swagger.png)
+### 4. Prediction Pipeline
+Input text → Preprocessing → TF-IDF → Model → Predicted Character  
 
-### Example Prediction
-![Prediction Output](images/prediction.png)
+---
 
-## ▶️ How to Run
+## Results
+- Accuracy: ~30%  
 
+### Why accuracy is moderate:
+- Characters use similar conversational language  
+- Dataset may be limited or imbalanced  
+- Catchphrases are not always unique  
+
+---
+
+## Example Predictions
+
+| Input Dialogue        | Predicted Character |
+|----------------------|--------------------|
+| "How you doin?"      | Joey               |
+| "We were on a break!"| Ross               |
+| "Oh. My. God!"       | Janice             |
+
+---
+
+## Project Structure
+│
+├── data/
+│ └── dialogues.csv
+│
+├── model/
+│ └── trained_model.pkl
+│
+├── src/
+│ ├── preprocessing.py
+│ ├── train.py
+│ └── predict.py
+│
+├── requirements.txt
+└── README.md
+
+
+---
+
+## How to Run
+
+### 1. Clone the repository
 ```bash
 git clone https://github.com/alirida8852/friends-nlp-project
 cd friends-nlp-project
-pip install -r requirements.txt
-uvicorn main:app --reload
 
-## 💡 Motivation
-This project was built to explore how NLP techniques can identify character-specific speech patterns in dialogue datasets.
+python src/predict.py
+
+Future Improvements
+Improve accuracy using deep learning (LSTM / BERT)
+Increase dataset size
+Build a web interface using FastAPI
+Deploy as an API
+
+Key Learnings
+Practical implementation of NLP pipelines
+Feature extraction using TF-IDF
+Challenges in multi-class classification
+Model evaluation and limitations
